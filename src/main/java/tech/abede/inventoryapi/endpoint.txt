@@ -1,0 +1,8 @@
+Get All inventories registered in the systems, parameter name is optional
+http://localhost:8080/products{name}
+
+Find All products listed under the requested category
+http://localhost:8080/categories/{name}/products
+
+Insert new product
+http://localhost:8080/products

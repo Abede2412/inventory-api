@@ -14,4 +14,8 @@ public class CategoryService {
     public Category createOne (Category category){
         return this.categoryRepository.save(category);
     }
+
+    public Category findOneByNameIgnoreCase(String name) {
+        return this.categoryRepository.findOneByNameIgnoreCase(name);
+    }
 }

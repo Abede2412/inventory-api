@@ -3,11 +3,14 @@ package tech.abede.inventoryapi.product;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import tech.abede.inventoryapi.category.Category;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Product {
 
     @Id
@@ -29,6 +32,21 @@ public class Product {
     private LocalDateTime updatedAt;
 
     public Product() {
+    }
+    public ProductResponse convertToResponse(){
+        ProductResponse productResponse = new ProductResponse();
+        productResponse.setId(this.id);
+        productResponse.setName(this.name);
+        productResponse.setQuantity(this.quantity);
+        productResponse.setCategory(this.category.getName());
+        return productResponse;
+    }
+    public ProductResponseByCategory convertToResponseByCategory(){
+        ProductResponseByCategory productResponse = new ProductResponseByCategory();
+        productResponse.setId(this.id);
+        productResponse.setName(this.name);
+        productResponse.setQuantity(this.quantity);
+        return productResponse;
     }
 
     public Integer getId() {
