@@ -1,5 +1,6 @@
 package tech.abede.inventoryapi.product;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<ProductResponse> createOne(@RequestBody ProductRequest productRequest){
+    public ResponseEntity<ProductResponse> createOne(@Valid @RequestBody ProductRequest productRequest){
         Product product = productRequest.convertToEntity();
         Product saveProduct = this.productService.createOne(product);
         return ResponseEntity.status(201).body(saveProduct.convertToResponse());
@@ -25,6 +26,9 @@ public class ProductController {
     @GetMapping("/products")
     public ResponseEntity<List<ProductResponse>> getAll(@RequestParam("name") Optional<String> optionalName){
         List<Product> products = this.productService.getAll(optionalName);
+        if (products.isEmpty()){
+            throw new ProductNotFoundException();
+        }
         List<ProductResponse> productResponses = products.stream().map(Product::convertToResponse).toList();
         return  ResponseEntity.ok().body(productResponses);
     }

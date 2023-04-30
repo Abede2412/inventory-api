@@ -1,11 +1,16 @@
 package tech.abede.inventoryapi.product;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import tech.abede.inventoryapi.category.Category;
 
 public class ProductRequest {
 
+    @NotBlank(message = "Product name can't be blank")
     private String name;
+    @PositiveOrZero(message = "Product quantity must be positive or zero")
     private Integer quantity;
+    @NotBlank(message = "Product category can't be blank")
     private String category;
 
     public ProductRequest() {
